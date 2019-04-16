@@ -38,6 +38,8 @@ RSpec.describe Order, type: :model do
     it {should have_many :order_items}
     it {should have_many :items}
     it {should belong_to :user}
+    it {should belong_to :coupon}
+
   end
 
   describe ".item_quantity" do
@@ -71,6 +73,23 @@ RSpec.describe Order, type: :model do
     it "returns the name of the user who created the order" do
       expect(@o3.user_name).to eq("#{@u1.name}")
     end
+  end
+
+  describe ".unique_coupon?" do
+    it 'returns false if user has not used coupon before and true if user has used coupon' do
+      coup1 = @umerch.coupons.create(name: "First Coupon", discount: 5.0)
+      coup2 = @umerch.coupons.create(name: "Second Coupon", discount: 10.0)
+      u1 = User.create(name: "Con Chilver",street_address: "16455 Miller Circle",city: "Van Nuys",state: "California",zip_code: "91406",email_address: "test@test.com",password:"IrGmrINsmr9e", enabled: true, role:0)
+
+      o1 = u1.orders.create(status: 2, coupon_id: coup2.id)
+      params = {coupon: "First Coupon"}
+      expect(Order.unique_coupon?(params, u1)).to eq(false)
+
+      o2 = u1.orders.create(status: 2, coupon_id: coup1.id)
+      params = {coupon: "Second Coupon"}
+      expect(Order.unique_coupon?(params, u1)).to eq(true)
+    end
+
   end
 
 end
