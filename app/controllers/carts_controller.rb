@@ -24,8 +24,8 @@ before_action :require_visitor_or_user
       if Order.unique_coupon?(params, current_user)
         redirect_to cart_path, danger: "You have already used this coupon"
       else
-      session[:coupon] = Coupon.find_by(name: params[:coupon])
-      redirect_to cart_path, success: "Coupon has been applied"
+        session[:coupon] = Coupon.find_by(name: params[:coupon])
+        redirect_to cart_path, success: "Coupon has been applied"
       end
     elsif params[:update] == "quantity"
       session[:cart][params[:item_id]] = params[:quantity].to_i

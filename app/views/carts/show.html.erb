@@ -54,13 +54,14 @@
       <% end %>
     </div>
     </div>
-
-    <%= form_tag(cart_path(update: :coupon), method: :patch) do %>
-    <%= select_tag :coupon, options_for_select(@merchant_coupons.insert(0, "Select a Coupon"))%>
-    <br>
-    <br>
-    <%= submit_tag 'Update Coupon', id: :button %>
-    <br>
+    <% if current_user %>
+      <%= form_tag(cart_path(update: :coupon), method: :patch) do %>
+      <%= select_tag :coupon, options_for_select(@merchant_coupons.insert(0, "Select a Coupon"))%>
+      <br>
+      <br>
+      <%= submit_tag 'Update Coupon', id: :button %>
+      <br>
+      <% end %>
     <% end %>
 
 

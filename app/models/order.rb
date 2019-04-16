@@ -9,7 +9,7 @@ class Order < ApplicationRecord
   def self.unique_coupon?(params, current_user)
     if where(coupon_id: Coupon.find_by(name: params[:coupon])).where(user_id: current_user.id).count > 0
       true
-    else false 
+    else false
     end
   end
 

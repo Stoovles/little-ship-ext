@@ -6,6 +6,7 @@ class Profile::OrdersController < ApplicationController
 
   def create
     if session[:coupon]
+
       #if coupon is applied
       new_order = current_user.orders.create(status: "pending", coupon_id: session[:coupon]["id"])
       session[:cart].each do |item_id, quantity|
@@ -18,7 +19,10 @@ class Profile::OrdersController < ApplicationController
 
       end
       #update coupon to used: true
-      Coupon.find(session[:coupon]["id"]).update(used: true)
+
+      @coupon = Coupon.find_by(name: session[:coupon]["name"])
+      @coupon.update(used: true)
+
     else
       #if no coupon is applied
       new_order = current_user.orders.create(status: "pending")
@@ -34,6 +38,7 @@ class Profile::OrdersController < ApplicationController
 
 
     session.delete(:cart)
+    session.delete(:coupon)
     redirect_to profile_orders_path, success: 'Your order was successfully created!'
   end
 
