@@ -78,7 +78,7 @@ class Cart
   # end
 
   def discounted?(session, item)
-    session.key?("coupon") && item.user_id == session[:coupon]["user_id"]
+    session.key?(:coupon) && item.user_id == session[:coupon]["user_id"]
   end
 
 end
