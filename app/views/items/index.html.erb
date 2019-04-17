@@ -32,6 +32,7 @@
       <p>Merchant: <%= item.merchant_name %></p>
       <p>In Inventory: <%= item.inventory %></p>
       <p>Price: <%= number_to_currency(item.current_price.round(2)) %></p>
+      <p>Average Rating: <%= item.average_rating %>
     </div>
   <% end %>
 </div>

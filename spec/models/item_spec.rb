@@ -110,5 +110,30 @@ RSpec.describe Item, type: :model do
         expect(@i2.inventory).to eq(28)
       end
     end
+
+    describe ".reviewable?" do
+      it "should return true if order_item has not been reviewed and false otherwise" do
+        expect(@i1.reviewable?(@o1)).to eq(true)
+        @oi1.update(reviewed: true)
+        expect(@i1.reviewable?(@o1)).to eq(false)
+      end
+    end
+
+    describe ".order_item_for_item_in_order" do
+      it "should return the order item given an order" do
+        expect(@i1.order_item_for_item_in_order(@o1)).to eq(@oi1)
+      end
+    end
+
+    describe ".average_rating" do
+      it "should return the average rating for an item" do
+        review_1 = Review.create(title: "Test", description: "Test", rating: 5, user_id: @u17.id, item_id: @i1.id)
+        review_2 = Review.create(title: "Test", description: "Test", rating: 4, user_id: @u17.id, item_id: @i1.id)
+        review_3 = Review.create(title: "Test", description: "Test", rating: 3, user_id: @u17.id, item_id: @i1.id)
+
+        expect(@i1.average_rating).to eq(4)
+      end
+    end
+
   end
 end

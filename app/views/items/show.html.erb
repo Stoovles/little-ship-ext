@@ -2,6 +2,7 @@
   <div class="item-show">
     <h1><%= @item.item_name %></h1>
     <p><%= @item.description %></p>
+    <p>Average Rating: <%= @item.average_rating %></p>
     <div class="info-container">
       <img src="<%= @item.image_url%>" alt="image of <%= @item.item_name %>" class="large-image">
       <section class="info-section">
@@ -25,3 +26,16 @@
     </div>
   </div>
 </div>
+
+<div class="item-show-container">
+    <% @reviews.each do |review| %>
+    <div class="item-show">
+      <h1><%= review.title %></h1>
+      <p>Review Description: <%= review.description %></p>
+      <p>User Name: <%= User.find(review.user_id).name %></p>
+      <p>Created At: <%= review.created_at %></p>
+      <% if review.created_at != review.updated_at %>
+        <p>Updated At: <%= review.updated_at %></p>
+      <% end %>
+    </div>
+    <% end %>
