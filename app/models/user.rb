@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :items
   has_many :orders
   has_many :coupons
+  has_many :reviews
 
 
   has_secure_password allow_blank: true
