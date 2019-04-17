@@ -29,6 +29,10 @@
       Price: <%= number_to_currency(item.order_price(@order)) %>
       <br>
       Subtotal: <%= number_to_currency(item.subtotal(@order)) %>
+      <br>
+      <% if item.reviewable?(@order) && @order.status == "shipped"%>
+        <%= link_to "Add Review", new_profile_review_path(:item_id => item.id, :order => @order), id: "button" %>
+      <% end %>
     </div>
 
   </div>
